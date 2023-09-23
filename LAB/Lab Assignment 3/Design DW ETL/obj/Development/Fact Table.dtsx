@@ -1,0 +1,2916 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/4/2023 6:59:41 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-3AGL6VH"
+  DTS:CreatorName="DESKTOP-3AGL6VH\AsadAli"
+  DTS:DTSID="{E99BC259-6533-4CA6-9525-ED995B0747AA}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5209.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="7"
+  DTS:VersionGUID="{8D49F18F-261A-48A1-BE92-A6FB96F3C24A}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-3AGL6VH.AdventureWorks2019]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{B7F3E9D8-E4A9-4F70-91D7-153F1E5843C0}"
+      DTS:ObjectName="DESKTOP-3AGL6VH.AdventureWorks2019">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-3AGL6VH;Initial Catalog=AdventureWorks2019;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-Product Dimension-{B7F3E9D8-E4A9-4F70-91D7-153F1E5843C0}DESKTOP-3AGL6VH.AdventureWorks2019;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-3AGL6VH.MyAdventureWorksDW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{47D2C4EA-16BA-4A24-B93D-65D314441690}"
+      DTS:ObjectName="DESKTOP-3AGL6VH.MyAdventureWorksDW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-3AGL6VH;Initial Catalog=MyAdventureWorksDW;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-Product Dimension-{47D2C4EA-16BA-4A24-B93D-65D314441690}DESKTOP-3AGL6VH.MyAdventureWorksDW;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{6F7701A4-4F0F-4763-AAA4-EBF197B17A20}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{47D2C4EA-16BA-4A24-B93D-65D314441690}"
+          SQLTask:SqlStatementSource="-- Drop Sales Fact Table&#xA;DROP TABLE IF EXISTS SalesFact;&#xA;&#xA;-- Sales Fact Table&#xA;CREATE TABLE SalesFact (&#xA;    sales_id INT IDENTITY(1, 1) PRIMARY KEY,&#xA;    date_id INT,&#xA;    product_id INT,&#xA;    vendor_id INT,&#xA;&#x9;territory_id INT,&#xA;    quantity_sold INT,&#xA;    total_amount DECIMAL(10, 2),&#xA;    FOREIGN KEY (date_id) REFERENCES DateDimension(date_id),&#xA;    FOREIGN KEY (product_id) REFERENCES ProductDimension(product_id),&#xA;    FOREIGN KEY (vendor_id) REFERENCES VendorDimension(vendor_id),&#xA;&#x9;FOREIGN KEY (territory_id) REFERENCES SalesTerritoryDimension(territory_id)&#xA;);&#xA;&#xA;CREATE INDEX IDX_SalesFact_DateId ON SalesFact (date_id);&#xA;CREATE INDEX IDX_SalesFact_ProductId ON SalesFact (product_id);&#xA;CREATE INDEX IDX_SalesFact_VendorId ON SalesFact (vendor_id);&#xA;CREATE INDEX IDX_SalesFact_QuantitySold ON SalesFact (quantity_sold);&#xA;CREATE INDEX IDX_SalesFact_TotalAmount ON SalesFact (total_amount);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SalesFact"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{be2feba8-7077-4d85-a05b-e02b8e92773e}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SalesFact"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\SalesFact\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\SalesFact\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SalesFact\Data Conversion.Inputs[Data Conversion Input].Columns[OrderDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="OrderDate"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[OrderDate]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\SalesFact\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\SalesFact\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Data Conversion.Outputs[Data Conversion Output].Columns[String Date]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\SalesFact\Data Conversion.Outputs[Data Conversion Output].Columns[String Date]"
+                      name="String Date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[OrderDate]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\SalesFact\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\SalesFact\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\SalesFact\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SalesFact\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\SalesFact\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SalesFact\Derived Column.Inputs[Derived Column Input].Columns[String Date]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="String Date"
+                      lineageId="Package\SalesFact\Data Conversion.Outputs[Data Conversion Output].Columns[String Date]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\SalesFact\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\SalesFact\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Derived Column.Outputs[Derived Column Output].Columns[date_id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="8"
+                      lineageId="Package\SalesFact\Derived Column.Outputs[Derived Column Output].Columns[date_id]"
+                      name="date_id"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[SUBSTRING](#{Package\SalesFact\Data Conversion.Outputs[Data Conversion Output].Columns[String Date]},1,4) + [SUBSTRING](#{Package\SalesFact\Data Conversion.Outputs[Data Conversion Output].Columns[String Date]},6,2) + [SUBSTRING](#{Package\SalesFact\Data Conversion.Outputs[Data Conversion Output].Columns[String Date]},9,2)</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">SUBSTRING([String Date],1,4) + SUBSTRING([String Date],6,2) + SUBSTRING([String Date],9,2)</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\SalesFact\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\SalesFact\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\SalesFact\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SalesFact\Join Order and Order Line"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Join Order and Order Line"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Left Input].Columns[SalesOrderID]"
+                      cachedDataType="i4"
+                      cachedName="SalesOrderID"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\SalesFact\Sort.Outputs[Sort Output].Columns[SalesOrderID]" />
+                    <inputColumn
+                      refId="Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Left Input].Columns[SalesOrderDetailID]"
+                      cachedDataType="i4"
+                      cachedName="SalesOrderDetailID"
+                      lineageId="Package\SalesFact\Sort.Outputs[Sort Output].Columns[SalesOrderDetailID]" />
+                    <inputColumn
+                      refId="Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Left Input].Columns[OrderQty]"
+                      cachedDataType="i2"
+                      cachedName="OrderQty"
+                      lineageId="Package\SalesFact\Sort.Outputs[Sort Output].Columns[OrderQty]" />
+                    <inputColumn
+                      refId="Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Left Input].Columns[ProductID]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      lineageId="Package\SalesFact\Sort.Outputs[Sort Output].Columns[ProductID]" />
+                    <inputColumn
+                      refId="Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Left Input].Columns[LineTotal]"
+                      cachedDataType="numeric"
+                      cachedName="LineTotal"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      lineageId="Package\SalesFact\Sort.Outputs[Sort Output].Columns[LineTotal]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Right Input].Columns[SalesOrderID]"
+                      cachedDataType="i4"
+                      cachedName="SalesOrderID"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\SalesFact\Sort 1.Outputs[Sort Output].Columns[SalesOrderID]" />
+                    <inputColumn
+                      refId="Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Right Input].Columns[OrderDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="OrderDate"
+                      lineageId="Package\SalesFact\Sort 1.Outputs[Sort Output].Columns[OrderDate]" />
+                    <inputColumn
+                      refId="Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Right Input].Columns[TerritoryID]"
+                      cachedDataType="i4"
+                      cachedName="TerritoryID"
+                      lineageId="Package\SalesFact\Sort 1.Outputs[Sort Output].Columns[TerritoryID]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output]"
+                  isSorted="true"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[SalesOrderID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[SalesOrderID]"
+                      name="SalesOrderID"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Left Input].Columns[SalesOrderID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[SalesOrderDetailID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[SalesOrderDetailID]"
+                      name="SalesOrderDetailID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Left Input].Columns[SalesOrderDetailID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[OrderQty]"
+                      dataType="i2"
+                      lineageId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[OrderQty]"
+                      name="OrderQty">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Left Input].Columns[OrderQty]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[ProductID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[ProductID]"
+                      name="ProductID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Left Input].Columns[ProductID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[LineTotal]"
+                      dataType="numeric"
+                      lineageId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[LineTotal]"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Left Input].Columns[LineTotal]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[OrderDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[OrderDate]"
+                      name="OrderDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Right Input].Columns[OrderDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[TerritoryID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[TerritoryID]"
+                      name="TerritoryID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Right Input].Columns[TerritoryID]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SalesFact\Merge Join"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\SalesFact\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SalesFact\Merge Join.Inputs[Merge Join Left Input].Columns[ProductID]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[ProductID]" />
+                    <inputColumn
+                      refId="Package\SalesFact\Merge Join.Inputs[Merge Join Left Input].Columns[SalesOrderID]"
+                      cachedDataType="i4"
+                      cachedName="SalesOrderID"
+                      lineageId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[SalesOrderID]" />
+                    <inputColumn
+                      refId="Package\SalesFact\Merge Join.Inputs[Merge Join Left Input].Columns[SalesOrderDetailID]"
+                      cachedDataType="i4"
+                      cachedName="SalesOrderDetailID"
+                      lineageId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[SalesOrderDetailID]" />
+                    <inputColumn
+                      refId="Package\SalesFact\Merge Join.Inputs[Merge Join Left Input].Columns[OrderQty]"
+                      cachedDataType="i2"
+                      cachedName="OrderQty"
+                      lineageId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[OrderQty]" />
+                    <inputColumn
+                      refId="Package\SalesFact\Merge Join.Inputs[Merge Join Left Input].Columns[LineTotal]"
+                      cachedDataType="numeric"
+                      cachedName="LineTotal"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      lineageId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[LineTotal]" />
+                    <inputColumn
+                      refId="Package\SalesFact\Merge Join.Inputs[Merge Join Left Input].Columns[OrderDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="OrderDate"
+                      lineageId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[OrderDate]" />
+                    <inputColumn
+                      refId="Package\SalesFact\Merge Join.Inputs[Merge Join Left Input].Columns[TerritoryID]"
+                      cachedDataType="i4"
+                      cachedName="TerritoryID"
+                      lineageId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[TerritoryID]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\SalesFact\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SalesFact\Merge Join.Inputs[Merge Join Right Input].Columns[ProductID]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\SalesFact\Sort 2.Outputs[Sort Output].Columns[ProductID]" />
+                    <inputColumn
+                      refId="Package\SalesFact\Merge Join.Inputs[Merge Join Right Input].Columns[BusinessEntityID]"
+                      cachedDataType="i4"
+                      cachedName="BusinessEntityID"
+                      lineageId="Package\SalesFact\Sort 2.Outputs[Sort Output].Columns[BusinessEntityID]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\SalesFact\Merge Join.Outputs[Merge Join Output]"
+                  isSorted="true"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[SalesOrderID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[SalesOrderID]"
+                      name="SalesOrderID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\SalesFact\Merge Join.Inputs[Merge Join Left Input].Columns[SalesOrderID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[SalesOrderDetailID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[SalesOrderDetailID]"
+                      name="SalesOrderDetailID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\SalesFact\Merge Join.Inputs[Merge Join Left Input].Columns[SalesOrderDetailID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[OrderQty]"
+                      dataType="i2"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[OrderQty]"
+                      name="OrderQty">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\SalesFact\Merge Join.Inputs[Merge Join Left Input].Columns[OrderQty]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[ProductID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[ProductID]"
+                      name="ProductID"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\SalesFact\Merge Join.Inputs[Merge Join Left Input].Columns[ProductID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[LineTotal]"
+                      dataType="numeric"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[LineTotal]"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\SalesFact\Merge Join.Inputs[Merge Join Left Input].Columns[LineTotal]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[OrderDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[OrderDate]"
+                      name="OrderDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\SalesFact\Merge Join.Inputs[Merge Join Left Input].Columns[OrderDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[vendor_id]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[vendor_id]"
+                      name="vendor_id">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\SalesFact\Merge Join.Inputs[Merge Join Right Input].Columns[BusinessEntityID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[TerritoryID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[TerritoryID]"
+                      name="TerritoryID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\SalesFact\Merge Join.Inputs[Merge Join Left Input].Columns[TerritoryID]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SalesFact\Sales Order Detail"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Sales Order Detail"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Sales].[SalesOrderDetail]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\SalesFact\Sales Order Detail.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-3AGL6VH.AdventureWorks2019]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-3AGL6VH.AdventureWorks2019]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[SalesOrderID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderID]"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[SalesOrderID]"
+                      name="SalesOrderID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[SalesOrderDetailID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderDetailID]"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[SalesOrderDetailID]"
+                      name="SalesOrderDetailID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[OrderQty]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].ExternalColumns[OrderQty]"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[OrderQty]"
+                      name="OrderQty"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      name="ProductID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[LineTotal]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].ExternalColumns[LineTotal]"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[LineTotal]"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderID]"
+                      dataType="i4"
+                      name="SalesOrderID" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderDetailID]"
+                      dataType="i4"
+                      name="SalesOrderDetailID" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].ExternalColumns[CarrierTrackingNumber]"
+                      dataType="wstr"
+                      length="25"
+                      name="CarrierTrackingNumber" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].ExternalColumns[OrderQty]"
+                      dataType="i2"
+                      name="OrderQty" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      dataType="i4"
+                      name="ProductID" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].ExternalColumns[SpecialOfferID]"
+                      dataType="i4"
+                      name="SpecialOfferID" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].ExternalColumns[UnitPrice]"
+                      dataType="cy"
+                      name="UnitPrice" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].ExternalColumns[UnitPriceDiscount]"
+                      dataType="cy"
+                      name="UnitPriceDiscount" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].ExternalColumns[LineTotal]"
+                      dataType="numeric"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].ExternalColumns[rowguid]"
+                      dataType="guid"
+                      name="rowguid" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].ExternalColumns[ModifiedDate]"
+                      dataType="dbTimeStamp"
+                      name="ModifiedDate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Error Output].Columns[SalesOrderID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Error Output].Columns[SalesOrderID]"
+                      name="SalesOrderID" />
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Error Output].Columns[SalesOrderDetailID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Error Output].Columns[SalesOrderDetailID]"
+                      name="SalesOrderDetailID" />
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Error Output].Columns[OrderQty]"
+                      dataType="i2"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Error Output].Columns[OrderQty]"
+                      name="OrderQty" />
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      name="ProductID" />
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Error Output].Columns[LineTotal]"
+                      dataType="numeric"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Error Output].Columns[LineTotal]"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6" />
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SalesFact\Sales Order Header"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Sales Order Header"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Sales].[SalesOrderHeader]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\SalesFact\Sales Order Header.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-3AGL6VH.AdventureWorks2019]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-3AGL6VH.AdventureWorks2019]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].Columns[SalesOrderID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderID]"
+                      lineageId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].Columns[SalesOrderID]"
+                      name="SalesOrderID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].Columns[OrderDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[OrderDate]"
+                      lineageId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].Columns[OrderDate]"
+                      name="OrderDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].Columns[TerritoryID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[TerritoryID]"
+                      lineageId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].Columns[TerritoryID]"
+                      name="TerritoryID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderID]"
+                      dataType="i4"
+                      name="SalesOrderID" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[RevisionNumber]"
+                      dataType="ui1"
+                      name="RevisionNumber" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[OrderDate]"
+                      dataType="dbTimeStamp"
+                      name="OrderDate" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[DueDate]"
+                      dataType="dbTimeStamp"
+                      name="DueDate" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[ShipDate]"
+                      dataType="dbTimeStamp"
+                      name="ShipDate" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[Status]"
+                      dataType="ui1"
+                      name="Status" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[OnlineOrderFlag]"
+                      dataType="bool"
+                      name="OnlineOrderFlag" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderNumber]"
+                      dataType="wstr"
+                      length="25"
+                      name="SalesOrderNumber" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[PurchaseOrderNumber]"
+                      dataType="wstr"
+                      length="25"
+                      name="PurchaseOrderNumber" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[AccountNumber]"
+                      dataType="wstr"
+                      length="15"
+                      name="AccountNumber" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[SalesPersonID]"
+                      dataType="i4"
+                      name="SalesPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[TerritoryID]"
+                      dataType="i4"
+                      name="TerritoryID" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[BillToAddressID]"
+                      dataType="i4"
+                      name="BillToAddressID" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[ShipToAddressID]"
+                      dataType="i4"
+                      name="ShipToAddressID" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[ShipMethodID]"
+                      dataType="i4"
+                      name="ShipMethodID" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[CreditCardID]"
+                      dataType="i4"
+                      name="CreditCardID" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[CreditCardApprovalCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="15"
+                      name="CreditCardApprovalCode" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[CurrencyRateID]"
+                      dataType="i4"
+                      name="CurrencyRateID" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[SubTotal]"
+                      dataType="cy"
+                      name="SubTotal" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[TaxAmt]"
+                      dataType="cy"
+                      name="TaxAmt" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[Freight]"
+                      dataType="cy"
+                      name="Freight" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[TotalDue]"
+                      dataType="cy"
+                      name="TotalDue" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[Comment]"
+                      dataType="wstr"
+                      length="128"
+                      name="Comment" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[rowguid]"
+                      dataType="guid"
+                      name="rowguid" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].ExternalColumns[ModifiedDate]"
+                      dataType="dbTimeStamp"
+                      name="ModifiedDate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Error Output].Columns[SalesOrderID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Error Output].Columns[SalesOrderID]"
+                      name="SalesOrderID" />
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Error Output].Columns[OrderDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Error Output].Columns[OrderDate]"
+                      name="OrderDate" />
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Error Output].Columns[TerritoryID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Error Output].Columns[TerritoryID]"
+                      name="TerritoryID" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SalesFact\SalesFacts"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="SalesFacts"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[SalesFact]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\SalesFact\SalesFacts.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-3AGL6VH.MyAdventureWorksDW]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-3AGL6VH.MyAdventureWorksDW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].Columns[vendor_id]"
+                      cachedDataType="i4"
+                      cachedName="vendor_id"
+                      externalMetadataColumnId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].ExternalColumns[vendor_id]"
+                      lineageId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[vendor_id]" />
+                    <inputColumn
+                      refId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].Columns[date_id]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="date_id"
+                      externalMetadataColumnId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].ExternalColumns[date_id]"
+                      lineageId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[date_id]" />
+                    <inputColumn
+                      refId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].Columns[ProductID]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      externalMetadataColumnId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      lineageId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[ProductID]" />
+                    <inputColumn
+                      refId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].Columns[OrderQty]"
+                      cachedDataType="i2"
+                      cachedName="OrderQty"
+                      externalMetadataColumnId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].ExternalColumns[quantity_sold]"
+                      lineageId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[OrderQty]" />
+                    <inputColumn
+                      refId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].Columns[LineTotal]"
+                      cachedDataType="numeric"
+                      cachedName="LineTotal"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].ExternalColumns[total_amount]"
+                      lineageId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[LineTotal]" />
+                    <inputColumn
+                      refId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].Columns[TerritoryID]"
+                      cachedDataType="i4"
+                      cachedName="TerritoryID"
+                      externalMetadataColumnId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].ExternalColumns[territory_id]"
+                      lineageId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[TerritoryID]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].ExternalColumns[vendor_id]"
+                      dataType="i4"
+                      name="vendor_id" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].ExternalColumns[date_id]"
+                      dataType="i4"
+                      name="date_id" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].ExternalColumns[sales_id]"
+                      dataType="i4"
+                      name="sales_id" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      dataType="i4"
+                      name="product_id" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].ExternalColumns[quantity_sold]"
+                      dataType="i4"
+                      name="quantity_sold" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].ExternalColumns[total_amount]"
+                      dataType="numeric"
+                      name="total_amount"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input].ExternalColumns[territory_id]"
+                      dataType="i4"
+                      name="territory_id" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\SalesFact\SalesFacts.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\SalesFacts.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\SalesFacts.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\SalesFact\SalesFacts.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\SalesFacts.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SalesFact\Sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\SalesFact\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort.Inputs[Sort Input].Columns[SalesOrderID]"
+                      cachedDataType="i4"
+                      cachedName="SalesOrderID"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[SalesOrderID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort.Inputs[Sort Input].Columns[SalesOrderDetailID]"
+                      cachedDataType="i4"
+                      cachedName="SalesOrderDetailID"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[SalesOrderDetailID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort.Inputs[Sort Input].Columns[OrderQty]"
+                      cachedDataType="i2"
+                      cachedName="OrderQty"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[OrderQty]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort.Inputs[Sort Input].Columns[ProductID]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[ProductID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort.Inputs[Sort Input].Columns[LineTotal]"
+                      cachedDataType="numeric"
+                      cachedName="LineTotal"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      lineageId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[LineTotal]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\SalesFact\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort.Outputs[Sort Output].Columns[SalesOrderID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sort.Outputs[Sort Output].Columns[SalesOrderID]"
+                      name="SalesOrderID"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[SalesOrderID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort.Outputs[Sort Output].Columns[SalesOrderDetailID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sort.Outputs[Sort Output].Columns[SalesOrderDetailID]"
+                      name="SalesOrderDetailID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[SalesOrderDetailID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort.Outputs[Sort Output].Columns[OrderQty]"
+                      dataType="i2"
+                      lineageId="Package\SalesFact\Sort.Outputs[Sort Output].Columns[OrderQty]"
+                      name="OrderQty">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[OrderQty]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort.Outputs[Sort Output].Columns[ProductID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sort.Outputs[Sort Output].Columns[ProductID]"
+                      name="ProductID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[ProductID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort.Outputs[Sort Output].Columns[LineTotal]"
+                      dataType="numeric"
+                      lineageId="Package\SalesFact\Sort.Outputs[Sort Output].Columns[LineTotal]"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output].Columns[LineTotal]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SalesFact\Sort 1"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort 1"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\SalesFact\Sort 1.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 1.Inputs[Sort Input].Columns[SalesOrderID]"
+                      cachedDataType="i4"
+                      cachedName="SalesOrderID"
+                      lineageId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].Columns[SalesOrderID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 1.Inputs[Sort Input].Columns[OrderDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="OrderDate"
+                      lineageId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].Columns[OrderDate]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 1.Inputs[Sort Input].Columns[TerritoryID]"
+                      cachedDataType="i4"
+                      cachedName="TerritoryID"
+                      lineageId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].Columns[TerritoryID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\SalesFact\Sort 1.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 1.Outputs[Sort Output].Columns[SalesOrderID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sort 1.Outputs[Sort Output].Columns[SalesOrderID]"
+                      name="SalesOrderID"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].Columns[SalesOrderID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 1.Outputs[Sort Output].Columns[OrderDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\SalesFact\Sort 1.Outputs[Sort Output].Columns[OrderDate]"
+                      name="OrderDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].Columns[OrderDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 1.Outputs[Sort Output].Columns[TerritoryID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sort 1.Outputs[Sort Output].Columns[TerritoryID]"
+                      name="TerritoryID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output].Columns[TerritoryID]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SalesFact\Sort 2"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort 2"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\SalesFact\Sort 2.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 2.Inputs[Sort Input].Columns[ProductID]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      lineageId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].Columns[ProductID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 2.Inputs[Sort Input].Columns[BusinessEntityID]"
+                      cachedDataType="i4"
+                      cachedName="BusinessEntityID"
+                      lineageId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].Columns[BusinessEntityID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\SalesFact\Sort 2.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 2.Outputs[Sort Output].Columns[ProductID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sort 2.Outputs[Sort Output].Columns[ProductID]"
+                      name="ProductID"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].Columns[ProductID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 2.Outputs[Sort Output].Columns[BusinessEntityID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sort 2.Outputs[Sort Output].Columns[BusinessEntityID]"
+                      name="BusinessEntityID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].Columns[BusinessEntityID]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SalesFact\Sort 3"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort 3"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\SalesFact\Sort 3.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 3.Inputs[Sort Input].Columns[SalesOrderID]"
+                      cachedDataType="i4"
+                      cachedName="SalesOrderID"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[SalesOrderID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 3.Inputs[Sort Input].Columns[SalesOrderDetailID]"
+                      cachedDataType="i4"
+                      cachedName="SalesOrderDetailID"
+                      lineageId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[SalesOrderDetailID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 3.Inputs[Sort Input].Columns[OrderQty]"
+                      cachedDataType="i2"
+                      cachedName="OrderQty"
+                      lineageId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[OrderQty]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 3.Inputs[Sort Input].Columns[ProductID]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      lineageId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[ProductID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 3.Inputs[Sort Input].Columns[LineTotal]"
+                      cachedDataType="numeric"
+                      cachedName="LineTotal"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      lineageId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[LineTotal]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 3.Inputs[Sort Input].Columns[OrderDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="OrderDate"
+                      lineageId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[OrderDate]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 3.Inputs[Sort Input].Columns[TerritoryID]"
+                      cachedDataType="i4"
+                      cachedName="TerritoryID"
+                      lineageId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[TerritoryID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\SalesFact\Sort 3.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[SalesOrderID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[SalesOrderID]"
+                      name="SalesOrderID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[SalesOrderID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[SalesOrderDetailID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[SalesOrderDetailID]"
+                      name="SalesOrderDetailID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[SalesOrderDetailID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[OrderQty]"
+                      dataType="i2"
+                      lineageId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[OrderQty]"
+                      name="OrderQty">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[OrderQty]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[ProductID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[ProductID]"
+                      name="ProductID"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[ProductID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[LineTotal]"
+                      dataType="numeric"
+                      lineageId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[LineTotal]"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[LineTotal]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[OrderDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[OrderDate]"
+                      name="OrderDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[OrderDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[TerritoryID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sort 3.Outputs[Sort Output].Columns[TerritoryID]"
+                      name="TerritoryID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output].Columns[TerritoryID]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SalesFact\Sort 4"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort 4"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\SalesFact\Sort 4.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 4.Inputs[Sort Input].Columns[SalesOrderID]"
+                      cachedDataType="i4"
+                      cachedName="SalesOrderID"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[SalesOrderID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 4.Inputs[Sort Input].Columns[SalesOrderDetailID]"
+                      cachedDataType="i4"
+                      cachedName="SalesOrderDetailID"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[SalesOrderDetailID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 4.Inputs[Sort Input].Columns[OrderQty]"
+                      cachedDataType="i2"
+                      cachedName="OrderQty"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[OrderQty]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 4.Inputs[Sort Input].Columns[ProductID]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[ProductID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 4.Inputs[Sort Input].Columns[LineTotal]"
+                      cachedDataType="numeric"
+                      cachedName="LineTotal"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[LineTotal]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 4.Inputs[Sort Input].Columns[vendor_id]"
+                      cachedDataType="i4"
+                      cachedName="vendor_id"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[vendor_id]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 4.Inputs[Sort Input].Columns[date_id]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="date_id"
+                      lineageId="Package\SalesFact\Derived Column.Outputs[Derived Column Output].Columns[date_id]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 4.Inputs[Sort Input].Columns[OrderDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="OrderDate"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[OrderDate]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 4.Inputs[Sort Input].Columns[String Date]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="String Date"
+                      lineageId="Package\SalesFact\Data Conversion.Outputs[Data Conversion Output].Columns[String Date]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SalesFact\Sort 4.Inputs[Sort Input].Columns[TerritoryID]"
+                      cachedDataType="i4"
+                      cachedName="TerritoryID"
+                      lineageId="Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[TerritoryID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\SalesFact\Sort 4.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[SalesOrderID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[SalesOrderID]"
+                      name="SalesOrderID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[SalesOrderID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[SalesOrderDetailID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[SalesOrderDetailID]"
+                      name="SalesOrderDetailID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[SalesOrderDetailID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[OrderQty]"
+                      dataType="i2"
+                      lineageId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[OrderQty]"
+                      name="OrderQty">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[OrderQty]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[ProductID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[ProductID]"
+                      name="ProductID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[ProductID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[LineTotal]"
+                      dataType="numeric"
+                      lineageId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[LineTotal]"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[LineTotal]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[vendor_id]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[vendor_id]"
+                      name="vendor_id">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[vendor_id]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[date_id]"
+                      dataType="wstr"
+                      length="8"
+                      lineageId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[date_id]"
+                      name="date_id">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Derived Column.Outputs[Derived Column Output].Columns[date_id]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[OrderDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[OrderDate]"
+                      name="OrderDate"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[OrderDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[String Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[String Date]"
+                      name="String Date">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Data Conversion.Outputs[Data Conversion Output].Columns[String Date]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[TerritoryID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Sort 4.Outputs[Sort Output].Columns[TerritoryID]"
+                      name="TerritoryID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\SalesFact\Merge Join.Outputs[Merge Join Output].Columns[TerritoryID]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SalesFact\Vendor Product"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Vendor Product"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Purchasing].[ProductVendor]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\SalesFact\Vendor Product.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-3AGL6VH.AdventureWorks2019]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-3AGL6VH.AdventureWorks2019]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      lineageId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      name="ProductID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].Columns[BusinessEntityID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].ExternalColumns[BusinessEntityID]"
+                      lineageId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].Columns[BusinessEntityID]"
+                      name="BusinessEntityID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      dataType="i4"
+                      name="ProductID" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].ExternalColumns[BusinessEntityID]"
+                      dataType="i4"
+                      name="BusinessEntityID" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].ExternalColumns[AverageLeadTime]"
+                      dataType="i4"
+                      name="AverageLeadTime" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].ExternalColumns[StandardPrice]"
+                      dataType="cy"
+                      name="StandardPrice" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].ExternalColumns[LastReceiptCost]"
+                      dataType="cy"
+                      name="LastReceiptCost" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].ExternalColumns[LastReceiptDate]"
+                      dataType="dbTimeStamp"
+                      name="LastReceiptDate" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].ExternalColumns[MinOrderQty]"
+                      dataType="i4"
+                      name="MinOrderQty" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].ExternalColumns[MaxOrderQty]"
+                      dataType="i4"
+                      name="MaxOrderQty" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].ExternalColumns[OnOrderQty]"
+                      dataType="i4"
+                      name="OnOrderQty" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].ExternalColumns[UnitMeasureCode]"
+                      dataType="wstr"
+                      length="3"
+                      name="UnitMeasureCode" />
+                    <externalMetadataColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output].ExternalColumns[ModifiedDate]"
+                      dataType="dbTimeStamp"
+                      name="ModifiedDate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      name="ProductID" />
+                    <outputColumn
+                      refId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Error Output].Columns[BusinessEntityID]"
+                      dataType="i4"
+                      lineageId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Error Output].Columns[BusinessEntityID]"
+                      name="BusinessEntityID" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\SalesFact.Paths[Data Conversion Output]"
+              endId="Package\SalesFact\Derived Column.Inputs[Derived Column Input]"
+              name="Data Conversion Output"
+              startId="Package\SalesFact\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\SalesFact.Paths[Derived Column Output]"
+              endId="Package\SalesFact\Sort 4.Inputs[Sort Input]"
+              name="Derived Column Output"
+              startId="Package\SalesFact\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\SalesFact.Paths[Merge Join Output]"
+              endId="Package\SalesFact\Sort 3.Inputs[Sort Input]"
+              name="Merge Join Output"
+              startId="Package\SalesFact\Join Order and Order Line.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\SalesFact.Paths[Merge Join Output1]"
+              endId="Package\SalesFact\Data Conversion.Inputs[Data Conversion Input]"
+              name="Merge Join Output"
+              startId="Package\SalesFact\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\SalesFact.Paths[OLE DB Source Output]"
+              endId="Package\SalesFact\Sort 1.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\SalesFact\Sales Order Header.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\SalesFact.Paths[OLE DB Source Output1]"
+              endId="Package\SalesFact\Sort.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\SalesFact\Sales Order Detail.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\SalesFact.Paths[OLE DB Source Output2]"
+              endId="Package\SalesFact\Sort 2.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\SalesFact\Vendor Product.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\SalesFact.Paths[Sort Output]"
+              endId="Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\SalesFact\Sort.Outputs[Sort Output]" />
+            <path
+              refId="Package\SalesFact.Paths[Sort Output1]"
+              endId="Package\SalesFact\Join Order and Order Line.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\SalesFact\Sort 1.Outputs[Sort Output]" />
+            <path
+              refId="Package\SalesFact.Paths[Sort Output2]"
+              endId="Package\SalesFact\Merge Join.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\SalesFact\Sort 3.Outputs[Sort Output]" />
+            <path
+              refId="Package\SalesFact.Paths[Sort Output3]"
+              endId="Package\SalesFact\Merge Join.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\SalesFact\Sort 2.Outputs[Sort Output]" />
+            <path
+              refId="Package\SalesFact.Paths[Sort Output4]"
+              endId="Package\SalesFact\SalesFacts.Inputs[OLE DB Destination Input]"
+              name="Sort Output"
+              startId="Package\SalesFact\Sort 4.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{E182750D-F030-4017-A35C-7C14D1CB7150}"
+      DTS:From="Package\Execute SQL Task"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\SalesFact" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="162.4,41.6"
+          Id="Package\Execute SQL Task"
+          TopLeft="268.571429143147,65.7647058247076" />
+        <NodeLayout
+          Size="122.4,41.6"
+          Id="Package\SalesFact"
+          TopLeft="291.428571921222,164.764705790523" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="351.200000532184,107.364705824708">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,57.399999965815"
+              Start="0,0"
+              End="0,49.899999965815">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.899999965815" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\SalesFact">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="106.4,41.6"
+          Id="Package\SalesFact\Sort 2"
+          TopLeft="581.434061636824,277.088236046549" />
+        <NodeLayout
+          Size="151.2,41.6"
+          Id="Package\SalesFact\Vendor Product"
+          TopLeft="554.489006178534,141.75792029828" />
+        <NodeLayout
+          Size="200.8,41.6"
+          Id="Package\SalesFact\Join Order and Order Line"
+          TopLeft="200.664834583058,220.14705867921" />
+        <NodeLayout
+          Size="127.2,41.6"
+          Id="Package\SalesFact\SalesFacts"
+          TopLeft="377.362630960987,699.594561866107" />
+        <NodeLayout
+          Size="129.6,41.6"
+          Id="Package\SalesFact\Merge Join"
+          TopLeft="363.576916910954,386.540719781288" />
+        <NodeLayout
+          Size="97.6,41.6"
+          Id="Package\SalesFact\Sort"
+          TopLeft="84.23626388586,128.613122486794" />
+        <NodeLayout
+          Size="152.8,41.6"
+          Id="Package\SalesFact\Derived Column"
+          TopLeft="353.57142932409,538.094117519703" />
+        <NodeLayout
+          Size="163.2,41.6"
+          Id="Package\SalesFact\Sales Order Detail"
+          TopLeft="49.071427009848,42.7340006521974" />
+        <NodeLayout
+          Size="169.6,44.8"
+          Id="Package\SalesFact\Sales Order Header"
+          TopLeft="314.016478490441,40.5452486863511" />
+        <NodeLayout
+          Size="106.4,41.6"
+          Id="Package\SalesFact\Sort 4"
+          TopLeft="383.027465746274,614.950673025681" />
+        <NodeLayout
+          Size="106.4,41.6"
+          Id="Package\SalesFact\Sort 1"
+          TopLeft="349.620875762971,126.305430660524" />
+        <NodeLayout
+          Size="106.4,41.6"
+          Id="Package\SalesFact\Sort 3"
+          TopLeft="241.159336235427,308.916285940937" />
+        <NodeLayout
+          Size="155.2,41.6"
+          Id="Package\SalesFact\Data Conversion"
+          TopLeft="350.714286460864,459.788235153356" />
+        <EdgeLayout
+          Id="Package\SalesFact.Paths[Sort Output4]"
+          TopLeft="438.595048353631,656.550673025681">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43.043888840426"
+              Start="0,0"
+              End="0,35.543888840426">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.543888840426" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SalesFact.Paths[Sort Output3]"
+          TopLeft="634.634061636824,318.688236046549">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-185.990478059203,67.8524837347389"
+              Start="0,0"
+              End="-185.990478059203,60.3524837347389">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.2150086525404" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,36.2150086525404"
+                    Point2="0,40.2150086525404"
+                    Point3="-4,40.2150086525404" />
+                  <mssgle:LineSegment
+                    End="-181.990478059203,40.2150086525404" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-181.990478059203,40.2150086525404"
+                    Point2="-185.990478059203,40.2150086525404"
+                    Point3="-185.990478059203,44.2150086525404" />
+                  <mssgle:LineSegment
+                    End="-185.990478059203,60.3524837347389" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SalesFact.Paths[Sort Output2]"
+          TopLeft="294.359336235427,350.516285940937">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="113.75091400886,36.0244338403509"
+              Start="0,0"
+              End="113.75091400886,28.5244338403509">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.3510668858665" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.3510668858665"
+                    Point2="0,21.3510668858665"
+                    Point3="4,21.3510668858665" />
+                  <mssgle:LineSegment
+                    End="109.75091400886,21.3510668858665" />
+                  <mssgle:CubicBezierSegment
+                    Point1="109.75091400886,21.3510668858665"
+                    Point2="113.75091400886,21.3510668858665"
+                    Point3="113.75091400886,25.3510668858665" />
+                  <mssgle:LineSegment
+                    End="113.75091400886,28.5244338403509" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SalesFact.Paths[Sort Output1]"
+          TopLeft="402.820875762971,167.905430660524">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-69.6227078465795,52.2416280186857"
+              Start="0,0"
+              End="-69.6227078465795,44.7416280186857">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.0971904332572" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27.0971904332572"
+                    Point2="0,31.0971904332572"
+                    Point3="-4,31.0971904332572" />
+                  <mssgle:LineSegment
+                    End="-65.6227078465795,31.0971904332572" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-65.6227078465795,31.0971904332572"
+                    Point2="-69.6227078465795,31.0971904332572"
+                    Point3="-69.6227078465795,35.0971904332572" />
+                  <mssgle:LineSegment
+                    End="-69.6227078465795,44.7416280186857" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SalesFact.Paths[Sort Output]"
+          TopLeft="133.03626388586,170.213122486794">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="135.895237363865,49.9339361924157"
+              Start="0,0"
+              End="135.895237363865,42.4339361924157">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.7235209113747" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.7235209113747"
+                    Point2="0,29.7235209113747"
+                    Point3="4,29.7235209113747" />
+                  <mssgle:LineSegment
+                    End="131.895237363865,29.7235209113747" />
+                  <mssgle:CubicBezierSegment
+                    Point1="131.895237363865,29.7235209113747"
+                    Point2="135.895237363865,29.7235209113747"
+                    Point3="135.895237363865,33.7235209113747" />
+                  <mssgle:LineSegment
+                    End="135.895237363865,42.4339361924157" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SalesFact.Paths[OLE DB Source Output2]"
+          TopLeft="632.361533907679,183.35792029828">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,93.7303157482688"
+              Start="0,0"
+              End="0,86.2303157482688">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,86.2303157482688" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SalesFact.Paths[OLE DB Source Output1]"
+          TopLeft="131.853845447854,84.3340006521973">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44.2791218345964"
+              Start="0,0"
+              End="0,36.7791218345964">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.7791218345964" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SalesFact.Paths[OLE DB Source Output]"
+          TopLeft="400.818677126706,85.3452486863511">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.9601819741727"
+              Start="0,0"
+              End="0,33.4601819741727">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.4601819741727" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SalesFact.Paths[Merge Join Output1]"
+          TopLeft="428.345601685909,428.140719781288">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,31.6475153720683"
+              Start="0,0"
+              End="0,24.1475153720683">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.1475153720683" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SalesFact.Paths[Merge Join Output]"
+          TopLeft="297.712085409243,261.74705867921">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47.1692272617269"
+              Start="0,0"
+              End="0,39.6692272617269">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.6692272617269" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SalesFact.Paths[Derived Column Output]"
+          TopLeft="433.099447535182,579.694117519703">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.2565555059773"
+              Start="0,0"
+              End="0,27.7565555059773">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.7565555059773" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SalesFact.Paths[Data Conversion Output]"
+          TopLeft="429.142857892477,501.388235153356">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36.7058823663468"
+              Start="0,0"
+              End="0,29.2058823663468">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.2058823663468" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

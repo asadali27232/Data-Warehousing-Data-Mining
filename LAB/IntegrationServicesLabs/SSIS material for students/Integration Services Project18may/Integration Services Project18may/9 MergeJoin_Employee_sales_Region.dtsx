@@ -1,0 +1,2053 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/14/2023 11:13:32 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-K2K46MA"
+  DTS:CreatorName="DESKTOP-K2K46MA\admin"
+  DTS:DTSID="{0838D0AE-C0F7-46B4-944B-DF9792DABF49}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5209.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="16"
+  DTS:VersionGUID="{B93BE0C7-13C9-4B6B-90BC-5CDCE58173B5}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-3AGL6VH.AdventureWorksDW2019]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3ED1F22A-2304-49C3-9E6E-3F6B28C12262}"
+      DTS:ObjectName="DESKTOP-3AGL6VH.AdventureWorksDW2019">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-3AGL6VH;Initial Catalog=AdventureWorksDW2019;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{3ED1F22A-2304-49C3-9E6E-3F6B28C12262}DESKTOP-3AGL6VH.AdventureWorksDW2019;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-3AGL6VH.SSIS Practice database]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C0BB1D54-49F3-470F-A4C4-1A1F088AADD3}"
+      DTS:ObjectName="DESKTOP-3AGL6VH.SSIS Practice database">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-3AGL6VH;Initial Catalog=SSIS Practice database;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{C0BB1D54-49F3-470F-A4C4-1A1F088AADD3}DESKTOP-3AGL6VH.SSIS Practice database;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Delete existing table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E0B4C33F-C757-4958-905E-B5B0EFAFB74A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete existing table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C0BB1D54-49F3-470F-A4C4-1A1F088AADD3}"
+          SQLTask:SqlStatementSource="delete from MergeJoin_Employee_Sales_Region" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\ETL for employee and its sales region details"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{D14D8261-8270-4EC3-B79F-805259E16307}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="ETL for employee and its sales region details"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\ETL for employee and its sales region details\Employee Table"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Employee Table"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[DimEmployee]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\ETL for employee and its sales region details\Employee Table.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-3AGL6VH.AdventureWorksDW2019]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-3AGL6VH.AdventureWorksDW2019]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[EmployeeKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[EmployeeKey]"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[EmployeeKey]"
+                      name="EmployeeKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[SalesTerritoryKey]"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryKey]"
+                      name="SalesTerritoryKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[FirstName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[FirstName]"
+                      name="FirstName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[LastName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[LastName]"
+                      name="LastName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[HireDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[HireDate]"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[HireDate]"
+                      name="HireDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[BirthDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[BirthDate]"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[BirthDate]"
+                      name="BirthDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[MaritalStatus]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[MaritalStatus]"
+                      length="1"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[MaritalStatus]"
+                      name="MaritalStatus"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[SalariedFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[SalariedFlag]"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[SalariedFlag]"
+                      name="SalariedFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[Gender]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[Gender]"
+                      length="1"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[Gender]"
+                      name="Gender"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[DepartmentName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[DepartmentName]"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[DepartmentName]"
+                      name="DepartmentName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[Status]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[Status]"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[Status]"
+                      name="Status"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[EmployeeKey]"
+                      dataType="i4"
+                      name="EmployeeKey" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[ParentEmployeeKey]"
+                      dataType="i4"
+                      name="ParentEmployeeKey" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[EmployeeNationalIDAlternateKey]"
+                      dataType="wstr"
+                      length="15"
+                      name="EmployeeNationalIDAlternateKey" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[ParentEmployeeNationalIDAlternateKey]"
+                      dataType="wstr"
+                      length="15"
+                      name="ParentEmployeeNationalIDAlternateKey" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[SalesTerritoryKey]"
+                      dataType="i4"
+                      name="SalesTerritoryKey" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
+                      dataType="wstr"
+                      length="50"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
+                      dataType="wstr"
+                      length="50"
+                      name="LastName" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[MiddleName]"
+                      dataType="wstr"
+                      length="50"
+                      name="MiddleName" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[NameStyle]"
+                      dataType="bool"
+                      name="NameStyle" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[Title]"
+                      dataType="wstr"
+                      length="50"
+                      name="Title" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[HireDate]"
+                      dataType="dbDate"
+                      name="HireDate" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[BirthDate]"
+                      dataType="dbDate"
+                      name="BirthDate" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[LoginID]"
+                      dataType="wstr"
+                      length="256"
+                      name="LoginID" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[EmailAddress]"
+                      dataType="wstr"
+                      length="50"
+                      name="EmailAddress" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[Phone]"
+                      dataType="wstr"
+                      length="25"
+                      name="Phone" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[MaritalStatus]"
+                      dataType="wstr"
+                      length="1"
+                      name="MaritalStatus" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[EmergencyContactName]"
+                      dataType="wstr"
+                      length="50"
+                      name="EmergencyContactName" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[EmergencyContactPhone]"
+                      dataType="wstr"
+                      length="25"
+                      name="EmergencyContactPhone" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[SalariedFlag]"
+                      dataType="bool"
+                      name="SalariedFlag" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[Gender]"
+                      dataType="wstr"
+                      length="1"
+                      name="Gender" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[PayFrequency]"
+                      dataType="ui1"
+                      name="PayFrequency" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[BaseRate]"
+                      dataType="cy"
+                      name="BaseRate" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[VacationHours]"
+                      dataType="i2"
+                      name="VacationHours" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[SickLeaveHours]"
+                      dataType="i2"
+                      name="SickLeaveHours" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[CurrentFlag]"
+                      dataType="bool"
+                      name="CurrentFlag" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[SalesPersonFlag]"
+                      dataType="bool"
+                      name="SalesPersonFlag" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[DepartmentName]"
+                      dataType="wstr"
+                      length="50"
+                      name="DepartmentName" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[StartDate]"
+                      dataType="dbDate"
+                      name="StartDate" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[EndDate]"
+                      dataType="dbDate"
+                      name="EndDate" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[Status]"
+                      dataType="wstr"
+                      length="50"
+                      name="Status" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].ExternalColumns[EmployeePhoto]"
+                      dataType="image"
+                      name="EmployeePhoto" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[EmployeeKey]"
+                      dataType="i4"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[EmployeeKey]"
+                      name="EmployeeKey" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[SalesTerritoryKey]"
+                      dataType="i4"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[SalesTerritoryKey]"
+                      name="SalesTerritoryKey" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[FirstName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[FirstName]"
+                      name="FirstName" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[LastName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[LastName]"
+                      name="LastName" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[HireDate]"
+                      dataType="dbDate"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[HireDate]"
+                      name="HireDate" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[BirthDate]"
+                      dataType="dbDate"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[BirthDate]"
+                      name="BirthDate" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[MaritalStatus]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[MaritalStatus]"
+                      name="MaritalStatus" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[SalariedFlag]"
+                      dataType="bool"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[SalariedFlag]"
+                      name="SalariedFlag" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[Gender]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[Gender]"
+                      name="Gender" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[DepartmentName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[DepartmentName]"
+                      name="DepartmentName" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[Status]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Error Output].Columns[Status]"
+                      name="Status" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\ETL for employee and its sales region details\Merge Join"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[SalesTerritoryKey]"
+                      cachedDataType="i4"
+                      cachedName="SalesTerritoryKey"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[SalesTerritoryKey]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[EmployeeKey]"
+                      cachedDataType="i4"
+                      cachedName="EmployeeKey"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[EmployeeKey]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[FirstName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="FirstName"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[FirstName]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[LastName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="LastName"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[LastName]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[HireDate]"
+                      cachedDataType="dbDate"
+                      cachedName="HireDate"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[HireDate]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[BirthDate]"
+                      cachedDataType="dbDate"
+                      cachedName="BirthDate"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[BirthDate]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[MaritalStatus]"
+                      cachedDataType="wstr"
+                      cachedLength="1"
+                      cachedName="MaritalStatus"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[MaritalStatus]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[SalariedFlag]"
+                      cachedDataType="bool"
+                      cachedName="SalariedFlag"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[SalariedFlag]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[Gender]"
+                      cachedDataType="wstr"
+                      cachedLength="1"
+                      cachedName="Gender"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[Gender]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[DepartmentName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="DepartmentName"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[DepartmentName]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[Status]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Status"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[Status]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Right Input].Columns[SalesTerritoryKey]"
+                      cachedDataType="i4"
+                      cachedName="SalesTerritoryKey"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\ETL for employee and its sales region details\Sort 1.Outputs[Sort Output].Columns[SalesTerritoryKey]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Right Input].Columns[SalesTerritoryRegion]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="SalesTerritoryRegion"
+                      lineageId="Package\ETL for employee and its sales region details\Sort 1.Outputs[Sort Output].Columns[SalesTerritoryRegion]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Right Input].Columns[SalesTerritoryCountry]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="SalesTerritoryCountry"
+                      lineageId="Package\ETL for employee and its sales region details\Sort 1.Outputs[Sort Output].Columns[SalesTerritoryCountry]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Right Input].Columns[SalesTerritoryGroup]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="SalesTerritoryGroup"
+                      lineageId="Package\ETL for employee and its sales region details\Sort 1.Outputs[Sort Output].Columns[SalesTerritoryGroup]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output]"
+                  isSorted="true"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[SalesTerritoryKey]"
+                      dataType="i4"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[SalesTerritoryKey]"
+                      name="SalesTerritoryKey"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[SalesTerritoryKey]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[EmployeeKey]"
+                      dataType="i4"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[EmployeeKey]"
+                      name="EmployeeKey">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[EmployeeKey]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[FirstName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[FirstName]"
+                      name="FirstName">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[FirstName]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[LastName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[LastName]"
+                      name="LastName">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[LastName]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[HireDate]"
+                      dataType="dbDate"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[HireDate]"
+                      name="HireDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[HireDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[BirthDate]"
+                      dataType="dbDate"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[BirthDate]"
+                      name="BirthDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[BirthDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[MaritalStatus]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[MaritalStatus]"
+                      name="MaritalStatus">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[MaritalStatus]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[SalariedFlag]"
+                      dataType="bool"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[SalariedFlag]"
+                      name="SalariedFlag">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[SalariedFlag]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[Gender]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[Gender]"
+                      name="Gender">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[Gender]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[DepartmentName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[DepartmentName]"
+                      name="DepartmentName">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[DepartmentName]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[Status]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[Status]"
+                      name="Status">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input].Columns[Status]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[SalesTerritoryRegion]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[SalesTerritoryRegion]"
+                      name="SalesTerritoryRegion">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Right Input].Columns[SalesTerritoryRegion]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[SalesTerritoryCountry]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[SalesTerritoryCountry]"
+                      name="SalesTerritoryCountry">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Right Input].Columns[SalesTerritoryCountry]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[SalesTerritoryGroup]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[SalesTerritoryGroup]"
+                      name="SalesTerritoryGroup">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Right Input].Columns[SalesTerritoryGroup]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="MergeJoin_Employee_Sales_Region"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[MergeJoin_Employee_Sales_Region]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-3AGL6VH.SSIS Practice database]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-3AGL6VH.SSIS Practice database]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].Columns[SalesTerritoryKey]"
+                      cachedDataType="i4"
+                      cachedName="SalesTerritoryKey"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[SalesTerritoryKey]"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[SalesTerritoryKey]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].Columns[EmployeeKey]"
+                      cachedDataType="i4"
+                      cachedName="EmployeeKey"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeKey]"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[EmployeeKey]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].Columns[FirstName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="FirstName"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[FirstName]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].Columns[LastName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="LastName"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[LastName]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].Columns[HireDate]"
+                      cachedDataType="dbDate"
+                      cachedName="HireDate"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[HireDate]"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[HireDate]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].Columns[BirthDate]"
+                      cachedDataType="dbDate"
+                      cachedName="BirthDate"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[BirthDate]"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[BirthDate]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].Columns[MaritalStatus]"
+                      cachedDataType="wstr"
+                      cachedLength="1"
+                      cachedName="MaritalStatus"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[MaritalStatus]"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[MaritalStatus]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].Columns[SalariedFlag]"
+                      cachedDataType="bool"
+                      cachedName="SalariedFlag"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[SalariedFlag]"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[SalariedFlag]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].Columns[Gender]"
+                      cachedDataType="wstr"
+                      cachedLength="1"
+                      cachedName="Gender"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[Gender]"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[Gender]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].Columns[DepartmentName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="DepartmentName"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[DepartmentName]"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[DepartmentName]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].Columns[Status]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Status"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[Status]"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[Status]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].Columns[SalesTerritoryRegion]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="SalesTerritoryRegion"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[SalesTerritoryRegion]"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[SalesTerritoryRegion]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].Columns[SalesTerritoryCountry]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="SalesTerritoryCountry"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[SalesTerritoryCountry]"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[SalesTerritoryCountry]" />
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].Columns[SalesTerritoryGroup]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="SalesTerritoryGroup"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[SalesTerritoryGroup]"
+                      lineageId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output].Columns[SalesTerritoryGroup]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[SalesTerritoryKey]"
+                      dataType="i4"
+                      name="SalesTerritoryKey" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeKey]"
+                      dataType="i4"
+                      name="EmployeeKey" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
+                      dataType="wstr"
+                      length="50"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
+                      dataType="wstr"
+                      length="50"
+                      name="LastName" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[HireDate]"
+                      dataType="dbDate"
+                      name="HireDate" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[BirthDate]"
+                      dataType="dbDate"
+                      name="BirthDate" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[MaritalStatus]"
+                      dataType="wstr"
+                      length="1"
+                      name="MaritalStatus" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[SalariedFlag]"
+                      dataType="bool"
+                      name="SalariedFlag" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[Gender]"
+                      dataType="wstr"
+                      length="1"
+                      name="Gender" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[DepartmentName]"
+                      dataType="wstr"
+                      length="50"
+                      name="DepartmentName" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[Status]"
+                      dataType="wstr"
+                      length="50"
+                      name="Status" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[SalesTerritoryRegion]"
+                      dataType="wstr"
+                      length="50"
+                      name="SalesTerritoryRegion" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[SalesTerritoryCountry]"
+                      dataType="wstr"
+                      length="50"
+                      name="SalesTerritoryCountry" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input].ExternalColumns[SalesTerritoryGroup]"
+                      dataType="wstr"
+                      length="50"
+                      name="SalesTerritoryGroup" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\ETL for employee and its sales region details\Sales Territory Table"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Sales Territory Table"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[DimSalesTerritory]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\ETL for employee and its sales region details\Sales Territory Table.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-3AGL6VH.AdventureWorksDW2019]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-3AGL6VH.AdventureWorksDW2019]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].ExternalColumns[SalesTerritoryKey]"
+                      lineageId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryKey]"
+                      name="SalesTerritoryKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryRegion]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].ExternalColumns[SalesTerritoryRegion]"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryRegion]"
+                      name="SalesTerritoryRegion"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryCountry]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].ExternalColumns[SalesTerritoryCountry]"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryCountry]"
+                      name="SalesTerritoryCountry"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryGroup]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].ExternalColumns[SalesTerritoryGroup]"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryGroup]"
+                      name="SalesTerritoryGroup"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].ExternalColumns[SalesTerritoryKey]"
+                      dataType="i4"
+                      name="SalesTerritoryKey" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].ExternalColumns[SalesTerritoryAlternateKey]"
+                      dataType="i4"
+                      name="SalesTerritoryAlternateKey" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].ExternalColumns[SalesTerritoryRegion]"
+                      dataType="wstr"
+                      length="50"
+                      name="SalesTerritoryRegion" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].ExternalColumns[SalesTerritoryCountry]"
+                      dataType="wstr"
+                      length="50"
+                      name="SalesTerritoryCountry" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].ExternalColumns[SalesTerritoryGroup]"
+                      dataType="wstr"
+                      length="50"
+                      name="SalesTerritoryGroup" />
+                    <externalMetadataColumn
+                      refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].ExternalColumns[SalesTerritoryImage]"
+                      dataType="image"
+                      name="SalesTerritoryImage" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Error Output].Columns[SalesTerritoryKey]"
+                      dataType="i4"
+                      lineageId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Error Output].Columns[SalesTerritoryKey]"
+                      name="SalesTerritoryKey" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Error Output].Columns[SalesTerritoryRegion]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Error Output].Columns[SalesTerritoryRegion]"
+                      name="SalesTerritoryRegion" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Error Output].Columns[SalesTerritoryCountry]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Error Output].Columns[SalesTerritoryCountry]"
+                      name="SalesTerritoryCountry" />
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Error Output].Columns[SalesTerritoryGroup]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Error Output].Columns[SalesTerritoryGroup]"
+                      name="SalesTerritoryGroup" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\ETL for employee and its sales region details\Sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\ETL for employee and its sales region details\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Inputs[Sort Input].Columns[EmployeeKey]"
+                      cachedDataType="i4"
+                      cachedName="EmployeeKey"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[EmployeeKey]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Inputs[Sort Input].Columns[SalesTerritoryKey]"
+                      cachedDataType="i4"
+                      cachedName="SalesTerritoryKey"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryKey]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Inputs[Sort Input].Columns[FirstName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="FirstName"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[FirstName]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Inputs[Sort Input].Columns[LastName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="LastName"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[LastName]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Inputs[Sort Input].Columns[HireDate]"
+                      cachedDataType="dbDate"
+                      cachedName="HireDate"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[HireDate]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Inputs[Sort Input].Columns[BirthDate]"
+                      cachedDataType="dbDate"
+                      cachedName="BirthDate"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[BirthDate]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Inputs[Sort Input].Columns[MaritalStatus]"
+                      cachedDataType="wstr"
+                      cachedLength="1"
+                      cachedName="MaritalStatus"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[MaritalStatus]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Inputs[Sort Input].Columns[SalariedFlag]"
+                      cachedDataType="bool"
+                      cachedName="SalariedFlag"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[SalariedFlag]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Inputs[Sort Input].Columns[Gender]"
+                      cachedDataType="wstr"
+                      cachedLength="1"
+                      cachedName="Gender"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[Gender]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Inputs[Sort Input].Columns[DepartmentName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="DepartmentName"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[DepartmentName]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Inputs[Sort Input].Columns[Status]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Status"
+                      lineageId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[Status]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[EmployeeKey]"
+                      dataType="i4"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[EmployeeKey]"
+                      name="EmployeeKey">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[EmployeeKey]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[SalesTerritoryKey]"
+                      dataType="i4"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[SalesTerritoryKey]"
+                      name="SalesTerritoryKey"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryKey]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[FirstName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[FirstName]"
+                      name="FirstName">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[FirstName]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[LastName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[LastName]"
+                      name="LastName">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[LastName]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[HireDate]"
+                      dataType="dbDate"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[HireDate]"
+                      name="HireDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[HireDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[BirthDate]"
+                      dataType="dbDate"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[BirthDate]"
+                      name="BirthDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[BirthDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[MaritalStatus]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[MaritalStatus]"
+                      name="MaritalStatus">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[MaritalStatus]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[SalariedFlag]"
+                      dataType="bool"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[SalariedFlag]"
+                      name="SalariedFlag">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[SalariedFlag]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[Gender]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[Gender]"
+                      name="Gender">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[Gender]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[DepartmentName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[DepartmentName]"
+                      name="DepartmentName">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[DepartmentName]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[Status]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output].Columns[Status]"
+                      name="Status">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output].Columns[Status]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\ETL for employee and its sales region details\Sort 1"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort 1"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\ETL for employee and its sales region details\Sort 1.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort 1.Inputs[Sort Input].Columns[SalesTerritoryKey]"
+                      cachedDataType="i4"
+                      cachedName="SalesTerritoryKey"
+                      lineageId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryKey]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort 1.Inputs[Sort Input].Columns[SalesTerritoryRegion]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="SalesTerritoryRegion"
+                      lineageId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryRegion]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort 1.Inputs[Sort Input].Columns[SalesTerritoryCountry]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="SalesTerritoryCountry"
+                      lineageId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryCountry]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort 1.Inputs[Sort Input].Columns[SalesTerritoryGroup]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="SalesTerritoryGroup"
+                      lineageId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryGroup]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\ETL for employee and its sales region details\Sort 1.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort 1.Outputs[Sort Output].Columns[SalesTerritoryKey]"
+                      dataType="i4"
+                      lineageId="Package\ETL for employee and its sales region details\Sort 1.Outputs[Sort Output].Columns[SalesTerritoryKey]"
+                      name="SalesTerritoryKey"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryKey]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort 1.Outputs[Sort Output].Columns[SalesTerritoryRegion]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Sort 1.Outputs[Sort Output].Columns[SalesTerritoryRegion]"
+                      name="SalesTerritoryRegion">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryRegion]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort 1.Outputs[Sort Output].Columns[SalesTerritoryCountry]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Sort 1.Outputs[Sort Output].Columns[SalesTerritoryCountry]"
+                      name="SalesTerritoryCountry">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryCountry]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\ETL for employee and its sales region details\Sort 1.Outputs[Sort Output].Columns[SalesTerritoryGroup]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL for employee and its sales region details\Sort 1.Outputs[Sort Output].Columns[SalesTerritoryGroup]"
+                      name="SalesTerritoryGroup">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output].Columns[SalesTerritoryGroup]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\ETL for employee and its sales region details.Paths[Merge Join Output]"
+              endId="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region.Inputs[OLE DB Destination Input]"
+              name="Merge Join Output"
+              startId="Package\ETL for employee and its sales region details\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\ETL for employee and its sales region details.Paths[OLE DB Source Output]"
+              endId="Package\ETL for employee and its sales region details\Sort.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\ETL for employee and its sales region details\Employee Table.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\ETL for employee and its sales region details.Paths[OLE DB Source Output1]"
+              endId="Package\ETL for employee and its sales region details\Sort 1.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\ETL for employee and its sales region details\Sales Territory Table.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\ETL for employee and its sales region details.Paths[Sort Output]"
+              endId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\ETL for employee and its sales region details\Sort.Outputs[Sort Output]" />
+            <path
+              refId="Package\ETL for employee and its sales region details.Paths[Sort Output1]"
+              endId="Package\ETL for employee and its sales region details\Merge Join.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\ETL for employee and its sales region details\Sort 1.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{BB079927-AE0E-4ED7-9F0B-C9AD10A2007C}"
+      DTS:From="Package\Delete existing table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\ETL for employee and its sales region details" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="175.2,41.6"
+          Id="Package\Delete existing table"
+          TopLeft="267,41" />
+        <NodeLayout
+          Size="288.8,41.6"
+          Id="Package\ETL for employee and its sales region details"
+          TopLeft="207.999999936138,148.588235301491" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="353.499999968069,82.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,65.9882353014908"
+              Start="0,0"
+              End="0,58.4882353014908">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,58.4882353014908" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\ETL for employee and its sales region details">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="153.6,41.6"
+          Id="Package\ETL for employee and its sales region details\Employee Table"
+          TopLeft="48,31.4117646871141" />
+        <NodeLayout
+          Size="176,41.6"
+          Id="Package\ETL for employee and its sales region details\Sales Territory Table"
+          TopLeft="397,25.4117646871141" />
+        <NodeLayout
+          Size="97.6,41.6"
+          Id="Package\ETL for employee and its sales region details\Sort"
+          TopLeft="76.7142857158062,102.470588213845" />
+        <NodeLayout
+          Size="129.6,41.6"
+          Id="Package\ETL for employee and its sales region details\Merge Join"
+          TopLeft="262.857142841938,195.52941172918" />
+        <NodeLayout
+          Size="107.2,41.6"
+          Id="Package\ETL for employee and its sales region details\Sort 1"
+          TopLeft="438.142857158062,95.1764705687968" />
+        <EdgeLayout
+          Id="Package\ETL for employee and its sales region details.Paths[Sort Output1]"
+          TopLeft="491.742857158062,136.776470568797">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-143.819047649458,58.7529411603832"
+              Start="0,0"
+              End="-143.819047649458,51.2529411603832">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.8218651267637" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,30.8218651267637"
+                    Point2="0,34.8218651267637"
+                    Point3="-4,34.8218651267637" />
+                  <mssgle:LineSegment
+                    End="-139.819047649458,34.8218651267637" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-139.819047649458,34.8218651267637"
+                    Point2="-143.819047649458,34.8218651267637"
+                    Point3="-143.819047649458,38.8218651267637" />
+                  <mssgle:LineSegment
+                    End="-143.819047649458,51.2529411603832" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\ETL for employee and its sales region details.Paths[Sort Output]"
+          TopLeft="125.514285715806,144.070588213845">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="181.876190459465,51.4588235153356"
+              Start="0,0"
+              End="181.876190459465,43.9588235153356">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.4987661322599" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26.4987661322599"
+                    Point2="0,30.4987661322599"
+                    Point3="4,30.4987661322599" />
+                  <mssgle:LineSegment
+                    End="177.876190459465,30.4987661322599" />
+                  <mssgle:CubicBezierSegment
+                    Point1="177.876190459465,30.4987661322599"
+                    Point2="181.876190459465,30.4987661322599"
+                    Point3="181.876190459465,34.4987661322599" />
+                  <mssgle:LineSegment
+                    End="181.876190459465,43.9588235153356" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\ETL for employee and its sales region details.Paths[OLE DB Source Output1]"
+          TopLeft="488.371428579031,67.0117646871141">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,28.1647058816827"
+              Start="0,0"
+              End="0,20.6647058816827">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.6647058816827" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\ETL for employee and its sales region details.Paths[OLE DB Source Output]"
+          TopLeft="125.157142857903,73.0117646871141">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,29.4588235267306"
+              Start="0,0"
+              End="0,21.9588235267306">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.9588235267306" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="247.2,41.6"
+          Id="Package\ETL for employee and its sales region details\MergeJoin_Employee_Sales_Region"
+          TopLeft="208.714285609369,282.47058820245" />
+        <EdgeLayout
+          Id="Package\ETL for employee and its sales region details.Paths[Merge Join Output]"
+          TopLeft="329.985714225653,237.12941172918">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45.3411764732695"
+              Start="0,0"
+              End="0,37.8411764732695">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.8411764732695" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\ETL for employee and its sales region details\Employee Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\ETL for employee and its sales region details\Sales Territory Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

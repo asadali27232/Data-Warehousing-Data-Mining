@@ -1,0 +1,225 @@
+﻿<Dimension xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="bc38830b-0169-4163-abcd-2cd8d554c777" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>Dim Promotion</ID>
+  <Name>Dim Promotion</Name>
+  <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+  <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+  <Annotations>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramLayout</Name>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowRelationshipNames</Name>
+      <Value>false</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:UseDiagramDefaultLayout</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortLeft</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingLeft</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramZoom</Name>
+      <Value>100</Value>
+    </Annotation>
+  </Annotations>
+  <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
+  <State>Unprocessed</State>
+  <Source xsi:type="DataSourceViewBinding" dwd:design-time-name="64108834-eeba-49e7-b4b9-9249ed19b920">
+    <DataSourceViewID>Sales DSV</DataSourceViewID>
+  </Source>
+  <ErrorConfiguration dwd:design-time-name="04783625-6589-4cc2-96b7-b0a0e947b328">
+    <KeyNotFound>ReportAndStop</KeyNotFound>
+    <KeyDuplicate>ReportAndStop</KeyDuplicate>
+    <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+  </ErrorConfiguration>
+  <CurrentStorageMode>Molap</CurrentStorageMode>
+  <Attributes>
+    <Attribute dwd:design-time-name="76a2605b-fff2-44f8-ac7f-4976d4510b16">
+      <ID>Promotion Key</ID>
+      <Name>Promotion Key</Name>
+      <Usage>Key</Usage>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="60e886af-04e1-433a-b2a9-023f145693a6">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="042eda59-d2ba-4abc-a964-71652c924497">
+            <TableID>dbo_DimPromotion</TableID>
+            <ColumnID>PromotionKey</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="dfa021d7-b7a3-4eca-9b63-9ca2fb8749d4">
+        <DataType>WChar</DataType>
+        <DataSize>255</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="9492b5b0-5091-4409-b80e-1b544710008e">
+          <TableID>dbo_DimPromotion</TableID>
+          <ColumnID>EnglishPromotionName</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="7aceea8f-2d61-4126-b7c8-a0ca28b9e4b8">
+          <AttributeID>Discount Pct</AttributeID>
+          <Name>Discount Pct</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="e54ced91-1401-45fc-a5ad-52b53a83a399">
+          <AttributeID>English Promotion Type</AttributeID>
+          <Name>English Promotion Type</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="78e96fb3-f49d-41ed-a0d6-9e3731d2167a">
+          <AttributeID>English Promotion Category</AttributeID>
+          <Name>English Promotion Category</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="8cf89014-533a-46df-aa83-1030956df7f3">
+          <AttributeID>Start Date</AttributeID>
+          <Name>Start Date</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="aab74268-16ae-4643-a889-82d6dc361c03">
+          <AttributeID>End Date</AttributeID>
+          <Name>End Date</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="12d9d20d-ebd4-4136-950d-dd8265e115df">
+          <AttributeID>Min Qty</AttributeID>
+          <Name>Min Qty</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="22ac9840-650b-48de-baa3-0bbdc43127ab">
+          <AttributeID>Max Qty</AttributeID>
+          <Name>Max Qty</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="6aa1983b-cf69-4a08-a245-afb553dec503">
+      <ID>Discount Pct</ID>
+      <Name>Discount Pct</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="ce3dd9dc-c92e-40f3-922b-daeed5b179ea">
+          <DataType>Double</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="94cbd8ed-a2b8-4ed2-a54e-cda8d103dffc">
+            <TableID>dbo_DimPromotion</TableID>
+            <ColumnID>DiscountPct</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="19aeac4b-4d3e-4ef1-85d8-6fde3ec5d115">
+      <ID>English Promotion Type</ID>
+      <Name>English Promotion Type</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="bb3e536f-fc87-4920-9340-5abf778cc65d">
+          <DataType>WChar</DataType>
+          <DataSize>50</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="4c1f3b07-0105-4035-b0ad-2f3b429cc796">
+            <TableID>dbo_DimPromotion</TableID>
+            <ColumnID>EnglishPromotionType</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="6c6c436a-c5b0-4ea3-a64c-a2e798ff972b">
+      <ID>English Promotion Category</ID>
+      <Name>English Promotion Category</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="29e9c56c-ed5f-4672-a8e8-9535564a799f">
+          <DataType>WChar</DataType>
+          <DataSize>50</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="e9736799-e703-449b-b6e4-ecebd68233d9">
+            <TableID>dbo_DimPromotion</TableID>
+            <ColumnID>EnglishPromotionCategory</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="1f0757a5-5384-4d2d-9476-04a5f66a6ae6">
+      <ID>Start Date</ID>
+      <Name>Start Date</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="ba3609f3-48c1-4add-a4a8-d66b026d7441">
+          <DataType>Date</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="7e0edc1c-67f1-4b5f-8522-01d996a585fe">
+            <TableID>dbo_DimPromotion</TableID>
+            <ColumnID>StartDate</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="e7d36cd2-d032-49bb-8956-7ba80c1fde44">
+      <ID>End Date</ID>
+      <Name>End Date</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="8c0aa441-4dd3-4610-a04f-f3a7d1a91364">
+          <DataType>Date</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="f2449073-4867-4aa9-a67e-52a73bfc43c3">
+            <TableID>dbo_DimPromotion</TableID>
+            <ColumnID>EndDate</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="fbf655c2-5ac9-4587-a17e-9c375310ffc1">
+      <ID>Min Qty</ID>
+      <Name>Min Qty</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="7dc5def0-da69-41fa-98d1-fe5902d681e9">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="6533fa8c-6cd5-4256-aab8-69295e9b29b6">
+            <TableID>dbo_DimPromotion</TableID>
+            <ColumnID>MinQty</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="b931899d-52d1-46f8-a14d-17b2b48f72ec">
+      <ID>Max Qty</ID>
+      <Name>Max Qty</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="72330ffa-cbf5-4210-9647-ed35eba073ba">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="59ab404d-e1b7-49bd-971e-d51018eb4dd8">
+            <TableID>dbo_DimPromotion</TableID>
+            <ColumnID>MaxQty</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+  </Attributes>
+  <ddl300:ProcessingState>Unprocessed</ddl300:ProcessingState>
+</Dimension>

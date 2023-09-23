@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D2ABAB84-BF74-430A-B69E-9DC6D40DDA17}") = "Design DW Assigment", "Design DW Assigment.dwproj", "{D322A8A3-8937-483A-BEDA-EE6F6E6DCA63}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D322A8A3-8937-483A-BEDA-EE6F6E6DCA63}.Development|Default.ActiveCfg = Development
+		{D322A8A3-8937-483A-BEDA-EE6F6E6DCA63}.Development|Default.Build.0 = Development
+		{D322A8A3-8937-483A-BEDA-EE6F6E6DCA63}.Development|Default.Deploy.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A969900-595A-447C-A074-F661328D39F1}
+	EndGlobalSection
+EndGlobal

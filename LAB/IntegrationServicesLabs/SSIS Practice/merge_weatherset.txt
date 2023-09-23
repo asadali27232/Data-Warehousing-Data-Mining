@@ -1,0 +1,14 @@
+sunny,85,85,FALSE,no,1
+rainy,75,80,FALSE,yes,10
+sunny,75,70,TRUE,yes,11
+overcast,72,90,TRUE,yes,12
+overcast,81,75,FALSE,yes,13
+rainy,71,91,TRUE,no,14
+sunny,80,90,TRUE,no,2
+overcast,83,86,FALSE,yes,3
+rainy,70,96,FALSE,yes,4
+rainy,68,80,FALSE,yes,5
+overcast,64,65,TRUE,yes,6
+rainy,65,70,TRUE,no,7
+sunny,69,70,FALSE,yes,8
+sunny,72,95,FALSE,no,9

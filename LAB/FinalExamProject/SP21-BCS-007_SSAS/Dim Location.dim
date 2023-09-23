@@ -1,0 +1,251 @@
+﻿<Dimension xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="aa49ac15-0b89-455a-9a5e-ff30c45a08eb" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>Dim Location</ID>
+  <Name>Dim Location</Name>
+  <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+  <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+  <Annotations>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramLayout</Name>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowRelationshipNames</Name>
+      <Value>false</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:UseDiagramDefaultLayout</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortLeft</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingLeft</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramZoom</Name>
+      <Value>100</Value>
+    </Annotation>
+  </Annotations>
+  <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
+  <State>Unprocessed</State>
+  <Source xsi:type="DataSourceViewBinding" dwd:design-time-name="6e4a1835-1e5d-40db-8475-edf4d3735f45">
+    <DataSourceViewID>Final Exam DSV</DataSourceViewID>
+  </Source>
+  <UnknownMember>Visible</UnknownMember>
+  <ErrorConfiguration dwd:design-time-name="5c946131-ce3d-488b-8208-3a07846906f0">
+    <KeyNotFound>ReportAndStop</KeyNotFound>
+    <KeyDuplicate>ReportAndStop</KeyDuplicate>
+    <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+  </ErrorConfiguration>
+  <CurrentStorageMode>Molap</CurrentStorageMode>
+  <Attributes>
+    <Attribute dwd:design-time-name="ce96b13d-e22e-42b4-97ff-045a1ffdde5c">
+      <ID>Location SK</ID>
+      <Name>Location SK</Name>
+      <Usage>Key</Usage>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="e68c6844-ee34-4fc2-a5ba-814864a26b59">
+          <DataType>Integer</DataType>
+          <NullProcessing>UnknownMember</NullProcessing>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="7f81a41d-9a78-4641-a167-0e780477ccf3">
+            <TableID>dbo_DimLocation</TableID>
+            <ColumnID>locationSK</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="3916ec42-b098-4e91-82e1-b8d71d9005fd">
+        <DataType>WChar</DataType>
+        <DataSize>50</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="440f52ec-2cc4-46f1-abe2-56fd2b27743f">
+          <TableID>dbo_DimLocation</TableID>
+          <ColumnID>locationAlternateID</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="7f6c8d2f-58f6-46f4-9dcc-da287def53ce">
+          <AttributeID>Latitude</AttributeID>
+          <Name>Latitude</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="bae6efb3-140d-47ab-90d1-224095c2f44d">
+          <AttributeID>Longitude</AttributeID>
+          <Name>Longitude</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="ff0a101e-06da-4413-9317-1e0f9709c72b">
+          <AttributeID>Country</AttributeID>
+          <Name>Country</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="947ca03f-0f8f-4d1e-a863-fd7cf61a2219">
+          <AttributeID>State</AttributeID>
+          <Name>State</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="b8cb0603-2c81-4397-95e3-d8bb24a8eb5a">
+          <AttributeID>Local Government Area</AttributeID>
+          <Name>Local Government Area</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="dbd85e1a-2f9f-4e4d-bbe0-bdb6c287a2b5">
+          <AttributeID>Statistical Area</AttributeID>
+          <Name>Statistical Area</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="e1c7481c-2016-4b99-8978-3bfe0af2d3eb">
+          <AttributeID>Insert Date</AttributeID>
+          <Name>Insert Date</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="2cbb09e7-21ad-4c43-9396-c177b7b298aa">
+          <AttributeID>Modified Date</AttributeID>
+          <Name>Modified Date</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="6bbeac1f-0546-45eb-a854-b972d4541cba">
+      <ID>Latitude</ID>
+      <Name>Latitude</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="cda5ac52-a660-4490-9bc7-d0736e3572f2">
+          <DataType>WChar</DataType>
+          <DataSize>50</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="22df74bf-5611-4d8f-ba46-7575d1a4cfd8">
+            <TableID>dbo_DimLocation</TableID>
+            <ColumnID>latitude</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="1f9056b2-7b0a-4ab8-80b5-6716ce172aac">
+      <ID>Longitude</ID>
+      <Name>Longitude</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="9d4aca1d-aab3-41d0-ad68-8e352895777a">
+          <DataType>WChar</DataType>
+          <DataSize>50</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="0b411bc1-d98b-4056-804d-938e11c92bd8">
+            <TableID>dbo_DimLocation</TableID>
+            <ColumnID>longitude</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="360d753b-84ae-4a9c-a6a2-6e1ee0664f5a">
+      <ID>Country</ID>
+      <Name>Country</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="8ac61fd0-27ab-4517-a4fb-65efa4cef74e">
+          <DataType>WChar</DataType>
+          <DataSize>50</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="fcc6a4c9-2405-4865-b764-90b13141b90e">
+            <TableID>dbo_DimLocation</TableID>
+            <ColumnID>country</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="35bee2f4-42da-4930-a95c-b4aa90d211e5">
+      <ID>State</ID>
+      <Name>State</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="eb13c764-67dd-47e9-aa1c-d0053e94007f">
+          <DataType>WChar</DataType>
+          <DataSize>50</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="68be4129-8f46-42e6-8eed-1808c22cf27e">
+            <TableID>dbo_DimLocation</TableID>
+            <ColumnID>state</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="81336099-d19e-43f8-83cf-e751fd61dced">
+      <ID>Local Government Area</ID>
+      <Name>Local Government Area</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="50c94881-b630-46b3-9b8d-c6e1f29cf6be">
+          <DataType>WChar</DataType>
+          <DataSize>50</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="734f322c-9325-44c7-b608-3c410bec93fb">
+            <TableID>dbo_DimLocation</TableID>
+            <ColumnID>local_government_area</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="7c8e45a4-c91e-4c16-b1c0-6eb9bc2dc15b">
+      <ID>Statistical Area</ID>
+      <Name>Statistical Area</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="b05e974d-992f-4c5b-86a1-db781cfefef5">
+          <DataType>WChar</DataType>
+          <DataSize>50</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="e1bccf27-1fb2-421a-a92c-5fd23d95bc97">
+            <TableID>dbo_DimLocation</TableID>
+            <ColumnID>statistical_area</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="0c6eb8f2-f8ec-44ca-9b4c-7ab8b5867840">
+      <ID>Insert Date</ID>
+      <Name>Insert Date</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="5c6aaedf-76b6-4493-8937-672380535641">
+          <DataType>Date</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="c0b00fb4-9d4a-48c2-886a-a6e2faf39b38">
+            <TableID>dbo_DimLocation</TableID>
+            <ColumnID>InsertDate</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="6f22f06b-e3ec-4d1e-bfb1-ba10839fc482">
+      <ID>Modified Date</ID>
+      <Name>Modified Date</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="19775928-2159-4d56-99de-9c6d5ec82af1">
+          <DataType>Date</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="d876b80a-c377-4556-b2e8-95456c5f8ffd">
+            <TableID>dbo_DimLocation</TableID>
+            <ColumnID>ModifiedDate</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+  </Attributes>
+  <ddl300:ProcessingState>Unprocessed</ddl300:ProcessingState>
+</Dimension>

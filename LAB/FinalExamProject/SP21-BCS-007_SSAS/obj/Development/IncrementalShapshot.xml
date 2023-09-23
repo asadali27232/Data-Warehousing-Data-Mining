@@ -1,0 +1,82 @@
+﻿<DeploymentSnapshot xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0">
+  <Target>
+    <Database>SP21-BCS-007_SSAS</Database>
+    <Server>localhost</Server>
+    <ConnectionString>Data Source=localhost;Timeout=0</ConnectionString>
+  </Target>
+  <Options>
+    <TransactionalDeployment>false</TransactionalDeployment>
+    <PartitionDeployment>DeployPartitions</PartitionDeployment>
+    <RoleDeployment>DeployRolesRetainMembers</RoleDeployment>
+    <ProcessingOption>DoNotProcess</ProcessingOption>
+    <OutputScript></OutputScript>
+    <ImpactAnalysisFile></ImpactAnalysisFile>
+    <ConfigurationSettingsDeployment>Deploy</ConfigurationSettingsDeployment>
+    <OptimizationSettingsDeployment>Deploy</OptimizationSettingsDeployment>
+    <WriteBackTableCreation>UseExisting</WriteBackTableCreation>
+  </Options>
+  <Snapshot>
+    <ObjectSnapshots>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.RelationalDataSource</Type>
+        <TimeStamp>cfb9yj7uCRaP0N29lPIq+ZFB+B4=6/10/2023 2:35:54 AM6/10/2023 2:35:54 AM</TimeStamp>
+        <ID>
+          <String>Final Exam Warehouse</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.DataSourceView</Type>
+        <TimeStamp>m5RdrhKBmlGcVv5Q7r1BFTSs1kE=6/10/2023 2:36:26 AM6/10/2023 2:36:26 AM</TimeStamp>
+        <ID>
+          <String>Final Exam DSV</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>otjjDq8ZW6AmZe4QkVsSh6r/Kvg=6/10/2023 2:37:03 AM6/10/2023 2:37:03 AM</TimeStamp>
+        <ID>
+          <String>Dim Vehicle</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>u/z743ZRJRlWNFq9Xqp7HiiHz2c=6/10/2023 2:37:29 AM6/10/2023 2:37:29 AM</TimeStamp>
+        <ID>
+          <String>Dim Description</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>mmxaUGUjVxaaeOPfXLl+/ZE1HVk=6/10/2023 2:38:04 AM6/10/2023 2:38:04 AM</TimeStamp>
+        <ID>
+          <String>Dim Date</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>NC5DtV/GU722nnI6H5NxM2X1WV8=6/10/2023 2:46:16 AM6/10/2023 2:46:16 AM</TimeStamp>
+        <ID>
+          <String>Dim Location</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Cube</Type>
+        <TimeStamp>0fx6hWr4PgRmefUu16unzT6xX2E=6/10/2023 2:47:16 AM6/10/2023 2:47:15 AMVvi0Qd83kkzBcNaXeUestB89eMA=6/10/2023 2:47:16 AM6/10/2023 2:47:16 AM</TimeStamp>
+        <ID>
+          <String>Final Exam Crash CUBE</String>
+        </ID>
+      </ObjectSnapshot>
+    </ObjectSnapshots>
+    <DatabaseSnapshot>
+      <Type>Microsoft.AnalysisServices.Database</Type>
+      <TimeStamp>Uav8ctADXjeV7oPbTixwqHELTVM=6/10/2023 2:35:09 AM6/10/2023 2:35:08 AM</TimeStamp>
+      <ID>
+        <String>SP21-BCS-007_SSAS</String>
+      </ID>
+    </DatabaseSnapshot>
+    <Granularity>Coarse</Granularity>
+  </Snapshot>
+  <AssemblyLocations />
+  <ProcessingComplete>true</ProcessingComplete>
+  <LastDeployed>2023-06-10T07:24:05.143333Z</LastDeployed>
+</DeploymentSnapshot>

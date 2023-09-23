@@ -1,0 +1,3 @@
+Open Project in Visual studio.
+Copy and paste folder named "SSIS practice" on your desktop
+Create a data base on SQL serer named "SSIS Practice database"
