@@ -111,4 +111,7 @@ In addition to MS SQL Server (All Versions), MS Analysis Ext, and MS Integration
 
 These technologies collectively empower you to explore, analyze, and transform data in meaningful ways, making your repository a valuable resource for those interested in data warehousing and data mining.
 
-
+## Contacts:
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/923074315952)
+[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:asadali27232@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/asadali27232/)
