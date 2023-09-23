@@ -22,8 +22,8 @@ A repository containing coursework, lab assignments, and projects on Data Wareho
 - **Predictive Modeling**: Building models to make predictions or forecasts based on historical data.
 
 ![SQL Server](https://img.shields.io/badge/-SQL%20Server-CC2927?style=flat-square&logo=microsoft-sql-server&logoColor=white)
-![Microsoft Analysis Services](https://img.shields.io/badge/-MS%20Analysis%20Ext-00BFFF?style=flat-square&logo=microsoft&logoColor=white)
-![Microsoft Integration Services](https://img.shields.io/badge/-MS%20Integration%20Ext-FFA500?style=flat-square&logo=microsoft&logoColor=white)
+![Microsoft Analysis Services](https://img.shields.io/badge/-Microsoft%20Analysis%20Services-00BFFF?style=flat-square&logo=microsoft&logoColor=white)
+![Microsoft Integration Services](https://img.shields.io/badge/-Microsoft%20Integration%20Services-FFA500?style=flat-square&logo=microsoft&logoColor=white)
 
 
 ## MS Analysis Services Extensions:
