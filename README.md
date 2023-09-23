@@ -1,6 +1,10 @@
 # Data-Warehousing-Data-Mining
 A repository containing coursework, lab assignments, and projects on Data Warehousing and Data Mining using Microsoft Analysis Services Extensions and Microsoft Integration Services in Visual Studio
 
+![SQL Server](https://img.shields.io/badge/-SQL%20Server-CC2927?style=flat-square&logo=microsoft-sql-server&logoColor=white)
+![Microsoft Analysis Services](https://img.shields.io/badge/-Microsoft%20Analysis%20Services-00BFFF?style=flat-square&logo=microsoft&logoColor=white)
+![Microsoft Integration Services](https://img.shields.io/badge/-Microsoft%20Integration%20Services-FFA500?style=flat-square&logo=microsoft&logoColor=white)
+
 # Data Warehousing and Data Mining:
 
 **Data Warehousing** involves the design and construction of data storage systems optimized for efficient querying and reporting. Key concepts in data warehousing include:
@@ -20,11 +24,6 @@ A repository containing coursework, lab assignments, and projects on Data Wareho
 - **Association Rule Mining**: Identifying relationships and associations between data elements.
 
 - **Predictive Modeling**: Building models to make predictions or forecasts based on historical data.
-
-![SQL Server](https://img.shields.io/badge/-SQL%20Server-CC2927?style=flat-square&logo=microsoft-sql-server&logoColor=white)
-![Microsoft Analysis Services](https://img.shields.io/badge/-Microsoft%20Analysis%20Services-00BFFF?style=flat-square&logo=microsoft&logoColor=white)
-![Microsoft Integration Services](https://img.shields.io/badge/-Microsoft%20Integration%20Services-FFA500?style=flat-square&logo=microsoft&logoColor=white)
-
 
 ## MS Analysis Services Extensions:
 
